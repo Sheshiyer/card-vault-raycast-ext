@@ -1,0 +1,30 @@
+{
+  "name": "card-vault",
+  "title": "Card Vault",
+  "description": "Securely store and manage your credit/debit card information",
+  "icon": "icon.png",
+  "author": "raycast",
+  "commands": [
+    {
+      "name": "index",
+      "title": "Card Vault",
+      "description": "Securely store and manage your credit/debit card information",
+      "mode": "view",
+      "icon": "icon.png"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.0.0",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@raycast/utils": "^1.0.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "dev": "ray develop",
+    "build": "ray build -e dist"
+  }
+}
