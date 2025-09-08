@@ -1,3 +1,18 @@
+export interface BankInfo {
+  name: string;
+  logo: string;
+  colors: {
+    primary: string;
+    secondary: string;
+  };
+}
+
+export interface BankLogos {
+  banks: {
+    [key: string]: BankInfo;
+  };
+}
+
 export interface Card {
   id: string;
   bankName: string;
