@@ -1,10 +1,13 @@
-import { List, ActionPanel, Action, Icon, useNavigation, Color } from "@raycast/api";
+import { List, ActionPanel, Action, Icon, useNavigation, Color, Image } from "@raycast/api";
 import { useEffect, useState } from "react";
 import React from "react";
-import { Card } from "./types";
+import { Card, BankLogos } from "./types";
 import { getStoredCards, maskCardNumber } from "./utils";
 import { CardForm } from "./components/CardForm";
 import { CardDetail } from "./components/CardDetail";
+import bankLogosData from "./bank-logos.json";
+
+const bankLogos = bankLogosData as BankLogos;
 
 const CREDIT_ICON = {
   source: Icon.CreditCard,
@@ -15,6 +18,14 @@ const DEBIT_ICON = {
   source: Icon.CreditCard,
   tintColor: Color.Green,
 };
+
+function getBankIcon(bankName: string): Image.ImageLike {
+  const bankInfo = bankLogos.banks[bankName];
+  if (bankInfo && bankInfo.logo) {
+    return { source: bankInfo.logo, mask: Image.Mask.RoundedRectangle };
+  }
+  return CREDIT_ICON;
+}
 
 function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('en-IN', { 
@@ -47,8 +58,8 @@ export default function Command() {
   function handleAddCard() {
     push(
       <CardForm
-        onSubmit={() => {
-          loadCards();
+        onSubmit={async () => {
+          await loadCards();
           pop();
         }}
       />
@@ -56,8 +67,8 @@ export default function Command() {
   }
 
   function handleSelectCard(card: Card) {
-    push(<CardDetail card={card} onCardUpdated={() => {
-      loadCards();
+    push(<CardDetail card={card} onCardUpdated={async () => {
+      await loadCards();
       pop();
     }} />);
   }
@@ -116,7 +127,7 @@ export default function Command() {
           {creditCards.map((card) => (
             <List.Item
               key={card.id}
-              icon={CREDIT_ICON}
+              icon={getBankIcon(card.bankName)}
               title={`${card.bankName} - ${card.cardName}`}
               subtitle={maskCardNumber(card.cardNumber)}
               accessories={[
@@ -162,7 +173,7 @@ export default function Command() {
           {debitCards.map((card) => (
             <List.Item
               key={card.id}
-              icon={DEBIT_ICON}
+              icon={getBankIcon(card.bankName)}
               title={`${card.bankName} - ${card.cardName}`}
               subtitle={maskCardNumber(card.cardNumber)}
               accessories={[

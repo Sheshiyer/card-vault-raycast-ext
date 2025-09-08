@@ -1,0 +1,60 @@
+{
+  "banks": {
+    "ICICI": {
+      "name": "ICICI Bank",
+      "logo": "https://logos-world.net/wp-content/uploads/2021/03/ICICI-Logo.png",
+      "colors": {
+        "primary": "#ED232A",
+        "secondary": "#F47920"
+      }
+    },
+    "Kotak": {
+      "name": "Kotak Mahindra Bank",
+      "logo": "https://logos-world.net/wp-content/uploads/2021/02/Kotak-Mahindra-Bank-Logo.png",
+      "colors": {
+        "primary": "#ED1C24",
+        "secondary": "#003C6E"
+      }
+    },
+    "IDFC": {
+      "name": "IDFC First Bank",
+      "logo": "https://www.idfcfirstbank.com/content/dam/idfcfirstbank/images/idfc-first-bank-logo.svg",
+      "colors": {
+        "primary": "#6C2E7C",
+        "secondary": "#F37021"
+      }
+    },
+    "Federal Bank": {
+      "name": "Federal Bank",
+      "logo": "https://www.federalbank.co.in/o/federal-bank-theme/images/federal-bank-logo.svg",
+      "colors": {
+        "primary": "#004B8D",
+        "secondary": "#FFD100"
+      }
+    },
+    "Axis Bank": {
+      "name": "Axis Bank",
+      "logo": "https://logos-world.net/wp-content/uploads/2021/02/Axis-Bank-Logo.png",
+      "colors": {
+        "primary": "#97144D",
+        "secondary": "#831F4C"
+      }
+    },
+    "HDFC": {
+      "name": "HDFC Bank",
+      "logo": "https://logos-world.net/wp-content/uploads/2021/02/HDFC-Bank-Logo.png",
+      "colors": {
+        "primary": "#004C8F",
+        "secondary": "#ED232A"
+      }
+    },
+    "Bajaj Finance": {
+      "name": "Bajaj Finance",
+      "logo": "https://www.bajajfinserv.in/content/dam/bajajfinserv-new/bajaj-finserv-logo-full.svg",
+      "colors": {
+        "primary": "#0066CC",
+        "secondary": "#003380"
+      }
+    }
+  }
+}

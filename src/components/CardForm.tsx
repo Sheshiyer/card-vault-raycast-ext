@@ -1,14 +1,39 @@
 import { Form, ActionPanel, Action, showToast, Toast } from "@raycast/api";
 import { useState } from "react";
-import { Card, CardFormData } from "../types";
+import { Card, CardFormData, BankLogos } from "../types";
+import { addCard, editCard } from "../utils";
+import bankLogosData from "../bank-logos.json";
+
+const bankLogos = bankLogosData as BankLogos;
 
 export function CardForm({ onSubmit, editingCard }: { onSubmit: () => void; editingCard?: Card }) {
   const [cardType, setCardType] = useState<"credit" | "debit">(editingCard?.cardType || "credit");
+  const bankOptions = Object.keys(bankLogos.banks).sort();
 
   async function handleSubmit(values: CardFormData) {
-    // Add validation as needed
-    await showToast({ style: Toast.Style.Success, title: editingCard ? "Card updated" : "Card added" });
-    onSubmit();
+    try {
+      // Parse numeric fields
+      const formData: CardFormData = {
+        ...values,
+        cardLimit: values.cardLimit ? Number(values.cardLimit) : undefined,
+        weeklySpending: values.weeklySpending ? Number(values.weeklySpending) : undefined,
+        weeklyLimit: values.weeklyLimit ? Number(values.weeklyLimit) : undefined,
+        weeklyUsage: values.weeklyUsage ? Number(values.weeklyUsage) : undefined,
+        lastWeekUsage: values.lastWeekUsage ? Number(values.lastWeekUsage) : undefined,
+        alertThreshold: values.alertThreshold ? Number(values.alertThreshold) : undefined,
+      };
+
+      if (editingCard) {
+        await editCard(editingCard.id, formData);
+      } else {
+        await addCard(formData);
+      }
+      
+      await showToast({ style: Toast.Style.Success, title: editingCard ? "Card updated" : "Card added" });
+      onSubmit();
+    } catch (error) {
+      await showToast({ style: Toast.Style.Failure, title: "Failed to save card", message: String(error) });
+    }
   }
 
   return (
@@ -21,7 +46,11 @@ export function CardForm({ onSubmit, editingCard }: { onSubmit: () => void; edit
       }
     >
       <Form.Description text="Card Details" />
-      <Form.TextField id="bankName" title="Bank Name" placeholder="e.g. ICICI Bank" defaultValue={editingCard?.bankName} />
+      <Form.Dropdown id="bankName" title="Bank Name" defaultValue={editingCard?.bankName || bankOptions[0]}>
+        {bankOptions.map((bank) => (
+          <Form.Dropdown.Item key={bank} value={bank} title={bankLogos.banks[bank].name} />
+        ))}
+      </Form.Dropdown>
       <Form.TextField id="cardName" title="Card Name" placeholder="e.g. Millenia Credit" defaultValue={editingCard?.cardName} />
       <Form.TextField id="cardHolderName" title="Holder Name" placeholder="Name on card" defaultValue={editingCard?.cardHolderName} />
       <Form.TextField id="cardNumber" title="Card Number" placeholder="16-digit card number" defaultValue={editingCard?.cardNumber} />
