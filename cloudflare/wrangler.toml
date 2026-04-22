@@ -1,0 +1,20 @@
+name = "card-vault-summary-api"
+main = "src/index.ts"
+compatibility_date = "2024-11-01"
+
+[vars]
+# Comma-separated IP allowlist (e.g., "203.0.113.10,198.51.100.22")
+ALLOWED_IPS = ""
+
+[[d1_databases]]
+binding = "DB"
+database_name = "card_vault"
+database_id = "f78c0475-f0c2-47d9-bccd-240c45a4189d"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "d5aa9b42b2f948bfa59143d5a56ea58b"
+
+[[r2_buckets]]
+binding = "ARCHIVE"
+bucket_name = "card-vault-exports"

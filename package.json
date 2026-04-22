@@ -13,6 +13,15 @@
       "icon": "icon.png"
     }
   ],
+  "preferences": [
+    {
+      "name": "workerBaseUrl",
+      "type": "textfield",
+      "title": "Worker Base URL",
+      "description": "Base URL of your Cloudflare Worker (e.g., https://card-vault-summary-api.YOUR.workers.dev)",
+      "required": false
+    }
+  ],
   "dependencies": {
     "@raycast/api": "^1.0.0",
     "react": "^18.2.0"
@@ -25,6 +34,12 @@
   },
   "scripts": {
     "dev": "ray develop",
-    "build": "ray build -e dist"
+    "build": "ray build -e dist",
+    "test": "tsc -p tsconfig.json && node dist/tests/expiry.test.js && node dist/tests/utilization.test.js && node dist/tests/audit.test.js && node dist/tests/storage_security.test.js",
+    "cf:dev": "cd cloudflare && wrangler dev",
+    "cf:deploy": "cd cloudflare && wrangler deploy",
+    "cf:migrate": "cd cloudflare && wrangler d1 migrations apply card_vault --remote",
+    "cf:migrate:local": "cd cloudflare && wrangler d1 migrations apply card_vault",
+    "cf:tail": "cd cloudflare && wrangler tail"
   }
 }
